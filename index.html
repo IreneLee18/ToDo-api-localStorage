@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="todolist">
+  <meta name="author" content="Irene">
+  <meta property="og:title" content="todolist" />
+  <meta property="og:description" content="todolist" />
+  <link rel="icon" type="image/x-icon" href="../image/todo.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../scss/all.css">
+  <title>all</title>
+</head>
+
+<body>
+  <div id="app">
+
+    <!-- login -->
+    <div class="login">
+      <div class="container">
+        <div class="row justify-content-center pt-11">
+          <div class="col-12 col-lg-6 text-center">
+            <img class="mb-3" src="../image/logo_lg.png" alt="logo">
+            <img class="d-none d-lg-inline" src="../image/done.png" alt="done">
+          </div>
+          <div class="col-12 col-md-9 col-lg-6 fw-bold">
+            <div class="container">
+              <div class="row justify-content-center">
+                <div class="col col-md-10">
+                  <h1 class="fs-3 fw-bold py-4 pt-lg-8 text-center text-lg-start">最實用的線上代辦事項服務</h1>
+                  <form>
+                    <div class="input-group-lg d-flex flex-column">
+                      <label class="lh-lg" for="Email">
+                        Email
+                      </label>
+                      <input class="py-3 ps-3 mb-2 rounded border-0" v-model="email" placeholder="請輸入Email" id="Email"
+                        type="email">
+                      <div class="invalid-feedback" :class="{'d-block':emailError}">
+                        請輸入正確格式
+                      </div>
+                    </div>
+                    <div class="input-group-lg d-flex flex-column">
+                      <label class="lh-lg" for="password">
+                        密碼
+                      </label>
+                      <input class="py-3 ps-3 mb-2 rounded border-0" v-model="password" placeholder="請輸入密碼"
+                        autocomplete="off" id="password" type="password">
+                      <div class="invalid-feedback" :class="{'d-block':passwordError}">
+                        請輸入正確密碼
+                      </div>
+                    </div>
+                  </form>
+                  <div class="w-25 mx-auto mt-2 mt-md-0 d-flex flex-column justify-content-center">
+                    <a :href="link" class="btn btn-secondary my-3" @click="login">登入</a>
+                    <a href="register.html" class="text-center fw-normal" style="cursor: pointer;">註冊帳號</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center mt-6">
+            <img class="d-none d-md-inline d-lg-none" src="../image/done.png" alt="done">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.33/vue.global.min.js'
+    integrity='sha512-nswZG83l1MggaGEAe/zLIbsVpZJUyqv+yg40f2CNp9QH5AOtOsjS4PSdWRDEr/v+R6YPhNJ1gvhDEJDOqh5qxQ=='
+    crossorigin='anonymous'></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script type="module" src="loginANDregister.js"></script>
+</body>
+
+</html>

@@ -107,6 +107,8 @@ const app = Vue.createApp({
         .delete(`${this.apiUrl}/users/sign_out`)
         .then((res) => {
           console.log("logout", res);
+          // 將所有存在localStorage的資料刪除
+          localStorage.clear()
           this.link = "index.html";
         })
         .catch((err) => console.log(err.response));

@@ -21,18 +21,14 @@ const app = Vue.createApp({
     // 渲染todo頁面的data值
     renderData() {
       axios
-        .get(`${this.apiUrl}/todos`, {
-          headers: {
-            Authorization: this.token,
-          },
-        })
+        .get(`${this.apiUrl}/todos`)
         .then((res) => {
           this.allData = res.data.todos;
           // 原本寫在這裡，但因為每次都會更新renderData因此會一直重複賦予值，所以就試著改放在deleteAll上，就可以正常運作了
           // this.doneData.forEach((item) => {
           //   this.deleteData.push(item.id);
           // });
-          localStorage.getItem("myName")
+          localStorage.getItem("myName");
           console.log("getDone", res, this.deleteData, this.doneData);
         })
         .catch((err) => console.log("get", err.response));
@@ -46,9 +42,6 @@ const app = Vue.createApp({
         .post(`${this.apiUrl}/todos`, {
           todo: {
             content: this.newTodo,
-          },
-          headers: {
-            Authorization: this.token,
           },
         })
         .then((res) => {
@@ -64,11 +57,7 @@ const app = Vue.createApp({
     // checked todo
     checkTodo(id) {
       axios
-        .patch(`${this.apiUrl}/todos/${id}/toggle`, {
-          headers: {
-            Authorization: this.token,
-          },
-        })
+        .patch(`${this.apiUrl}/todos/${id}/toggle`)
         .then((res) => {
           // 使用this.allData = res.data;的話後面computed會出錯，原因在於因為res.data取到是目前的所點擊的，而非所有的data
           // this.allData = res.data;
@@ -80,11 +69,7 @@ const app = Vue.createApp({
     // 刪除單筆 todo
     deleteList(id) {
       axios
-        .delete(`${this.apiUrl}/todos/${id}`, {
-          headers: {
-            Authorization: this.token,
-          },
-        })
+        .delete(`${this.apiUrl}/todos/${id}`)
         .then((res) => {
           this.renderData();
           console.log(res, this.allData);
@@ -106,11 +91,7 @@ const app = Vue.createApp({
       for (let i = 0; i < this.deleteData.length; i++) {
         console.log(i);
         axios
-          .delete(`${this.apiUrl}/todos/${this.deleteData[i]}`, {
-            headers: {
-              Authorization: this.token,
-            },
-          })
+          .delete(`${this.apiUrl}/todos/${this.deleteData[i]}`)
           .then((res) => {
             this.renderData();
             this.deleteData = [];
@@ -123,11 +104,7 @@ const app = Vue.createApp({
     // 登出
     logout() {
       axios
-        .delete(`${this.apiUrl}/users/sign_out`, {
-          headers: {
-            Authorization: this.token,
-          },
-        })
+        .delete(`${this.apiUrl}/users/sign_out`)
         .then((res) => {
           console.log("logout", res);
           this.link = "index.html";
@@ -201,11 +178,24 @@ const app = Vue.createApp({
       }
     },
   },
-  created() {
-    this.token = localStorage.getItem("myToken")
+  mounted() {
+    this.token = localStorage.getItem("myToken");
     this.myTodoName = localStorage.getItem("myName");
+
+    // axios 預設的 headers ＝ token值
+    axios.defaults.headers.common["Authorization"] = this.token;
     // 目的是當進入到todolist時，會直接讀取資料
-    this.renderData();
+    axios
+      .get(`${this.apiUrl}/todos`, {
+        headers: {
+          Authorization: this.token,
+        },
+      })
+      .then((res) => {
+        this.allData = res.data.todos;
+        console.log("getDone", res, this.deleteData, this.doneData);
+      })
+      .catch((err) => console.log("get", err.response));
   },
 });
 app.mount("#app");
